@@ -3,6 +3,7 @@
 0-pascal_triangle.py
 """
 
+
 def pascal_triangle(n):
     """
     Computes Pascal's triangle up to the nth row
