@@ -3,28 +3,21 @@
 
 
 def canUnlockAll(boxes):
-    """
-    Check if all boxes can be opened.
+    # Initialize a set to keep track of visited boxes
+    visited = set()
+    # Start DFS from the first box (box 0)
+    stack = [0]
 
-    args:
-        boxes(list): list containing lists representing a box
+    # Perform DFS traversal
+    while stack:
+        current_box = stack.pop()
+        visited.add(current_box)
 
-    Returns:
-        True if all boxes can be opened, false otherwise
+        # Check keys in the current box
+        for key in boxes[current_box]:
+            # If the key opens a new box and that box is not visited yet, add it to the stack
+            if key < len(boxes) and key not in visited:
+                stack.append(key)
 
-    """
-    is_open = []
-    for i in range(len(boxes)):
-        for j in range(len(boxes[i])):
-            for k in range(1, len(boxes)):
-                if i == k:
-                    continue
-                else:
-                    if boxes[i][j] == k:
-                        is_open.append(f"{k} is_opened")
-                    else:
-                        is_open.append(f"{k} is_not_opened")
-    is_open = [item for item in is_open if item.split(" ")[1] == "is_opened"]
-    unique_list = []
-    [unique_list.append(item) for item in is_open if item not in unique_list]
-    return True if len(unique_list) == (len(boxes) - 1) else False
+    # If all boxes have been visited, return True; otherwise, return False
+    return len(visited) == len(boxes)
